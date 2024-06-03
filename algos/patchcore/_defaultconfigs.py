@@ -1,0 +1,22 @@
+patchcore_default_model_params =  {"results_path":"test_results", #, type=str)
+                                "seed":0, #, ,type=int, default=0, show_default=True)
+                                "log_group":"group", #, type=str, default="group")
+                                "log_project":"project", #, type=str, default="project")
+                                "backbone_names_layers": {"wideresnet50": ["layer2", "layer3"]}, # each item must be a list of layers
+                                "pretrain_embed_dimension":1024, #, type=int, default=1024)
+                                "target_embed_dimension":1024, #, type=int, default=1024)
+                                "preprocessing":"mean", #, type=click.Choice(["mean", "conv"]), default="mean")
+                                "aggregation":"mean", #, type=click.Choice(["mean", "mlp"]), default="mean")
+                                "anomaly_scorer_num_nn":5,#, ,type=int, default=5)
+                                "patchsize":3, #, ,type=int, default=3)
+                                "patchscore":"max", # , type=str, default="max")
+                                "patchoverlap":0.0 ,#, type=float, default=0.0)
+                                "patchsize_aggregate":[] ,#, "-pa", type=int, multiple=True, default=[])
+                                "faiss_on_gpu": True,#, is_flag=True)
+                                "faiss_num_workers":8, #, ,type=int, default=8)
+                                "percentage":0.01,#, "-p", type=float, default=0.1, show_default=True)
+                                "num_workers":8, #, ,default=8, type=int, show_default=True)
+                                "input_size": 256,#, default=256, type=int, show_default=True)
+                                "augment":True,#, is_flag=True)
+                                "sampler_name":"approx_greedy_coreset",
+                                }
