@@ -1,3 +1,15 @@
+'''
+Based on code found here: https://github.com/DonaldRR/SimpleNet
+And based on the the papers: 
+@inproceedings{liu2023simplenet,
+                title={SimpleNet: A Simple Network for Image Anomaly Detection and Localization},
+                author={Liu, Zhikang and Zhou, Yiming and Xu, Yuansheng and Wang, Zilei},
+                booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
+                pages={20402--20411},
+                year={2023}
+}
+}
+'''
 from algos.model_wrapper import ModelWrapper
 import numpy as np
 from torchvision import transforms

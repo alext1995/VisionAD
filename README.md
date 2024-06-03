@@ -10,9 +10,9 @@ VisionAD contains the largest and most performant collection of anomaly detectio
 
 1. Clone the repository
 2. `pip3 install -r requirements.txt` / `pip3 install -r requirements_all.txt`
-4. Download the MVTec/VisA datasets
-5. Fill the paths to the MVTeac and VisA datasets in `data/configure_dataset.py`
-6. Run one of the algorithms to check that everything is working:
+3. Download the MVTec/VisA datasets
+4. Fill the paths to the MVTeac and VisA datasets in `data/configure_dataset.py`
+5. Run one of the algorithms to check that everything is working:
 
 ```
 python3 run.py --config configs/ppdm/ppdm_mvtec.py --wandb 0 --device "cuda:0"

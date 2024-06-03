@@ -1,3 +1,15 @@
+'''
+Based on code found here: https://github.com/FlappyPeggy/DMAD
+And based on the the papers: 
+@inproceedings{liu2023dmad,
+                title={Diversity-Measurable Anomaly Detection},
+                author={Wenrui Liu and Hong Chang and Bingpeng Ma and Shiguang Shan and Xilin Chen},
+                booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
+                month={June},
+                year={2023},
+                pages={12147-12156}
+}
+'''
 from algos.model_wrapper import ModelWrapper
 import numpy as np
 from torchvision import transforms
