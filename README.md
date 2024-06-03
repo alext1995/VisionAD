@@ -9,9 +9,9 @@ VisionAD contains the largest and most performant collection of anomaly detectio
 ## Getting started
 
 1. Clone the repository
-2. pip3 install -r requirements.txt / pip3 install -r requirements_all.txt
+2. `pip3 install -r requirements.txt` / `pip3 install -r requirements_all.txt`
 4. Download the MVTec/VisA datasets
-5. Fill the paths to the MVTeac and VisA datasets in data/configure_dataset.py
+5. Fill the paths to the MVTeac and VisA datasets in `data/configure_dataset.py`
 6. Run one of the algorithms to check that everything is working:
 
 ```
@@ -32,7 +32,7 @@ python3 run.py --config configs/{my_config_file} --run_description "my_experimen
 
 ## Config files
 
-The config file needs a variable dataset_list. This tells which the wrapper which datasets to run. It also needs a list a of metrics to run. Setting the first item to 'all' will mean all metrics are ran. 
+The config file needs a variable `dataset_list`. This tells which the wrapper which datasets to run. It also needs a list a of metrics to run. Setting the first item to 'all' will mean all metrics are ran. 
 
 ```
 from torchvision import transforms
@@ -43,7 +43,7 @@ dataset_list = ['mvtec_bottle',
 metrics = ["all"]
 ```
 
-The config also needs a model_list. Each item in the list is a dictionary, where the dictionary tells the wrapper what algorithm, hyperparameters, data loading parameters, and evaluation parameters. 
+The config also needs a `model_list`. Each item in the list is a dictionary, where the dictionary tells the wrapper the algorithm, hyperparameters, data loading parameters, and evaluation parameters. 
 
 ```
 from algos.cfa._defaultconfigs import cfa_default_model_params
@@ -62,21 +62,19 @@ model_list.append({"algo_class_name": "cfa", # algorithm, see algos/model_wrappe
                     "evaluate_n_epochs": 2, # evaluates the algorithm every n epochs
                     "test_batch_size": 8, # test batch size
                     "device": "cuda:0", # device (overwritten if device specificed in command line)
-                    "train_time_limit": 2*3600, # training time limit in seconds, after this stops training
+                    "train_time_limit": 2*3600, # training time limit in seconds, after this training stops (note the timer does not include inference during testing or calculating of metrics)
                     "input_size": 256, # input image size
                     "model_description": "CFA_mvtec_run", # description saved to each run from the dictionary - DIFFERENT to run_description in the cmd, which is the description attached to all the runs in a given config file - use no more than 20 characters - used in the results directory name
-                    "model_long_description": "Feel free to put a longer description of this model in here if you desire. This will be saved to the WandB, the saved predictions, and a json file in the results directory of the run.", 
-                    "save_metric_meta_data": False, # whether the metric data is saved alongside the metric results, setting as True will results in a lot of physical memory consumption
+                    "model_long_description": "Feel free to put a longer description of this model in here if you desire. This will be saved to the WandB run, the saved predictions, and a json file in the results directory of the run.", 
+                    "save_metric_meta_data": False, # whether the metric data is saved alongside the metric results, setting as True will result in a lot of physical memory consumption
                     "wandb": True, # upload the data to Wandb or not
                     }) 
 #model_list.append({...})
 ```
 
-The model_list can contain any number of algorithms/hyperparameter combinations. Each algorithm in model_list is combined with each dataset in dataset_list. 
+The `model_list` can contain any number of algorithms/hyperparameter combinations. By default each algorithm in `model_list` is combined with each dataset in `dataset_list`. 
 
-We choose .py for config files because it enables the user to use the flexibility of Python. For instance, if one wanted to test an algorithm with various hyperparameters, they could create a for loop which dynamically changes the given hyperparameter and description. 
-
-The default is to combine each model with each dataset. However, you can config each model to run a bespoke list of datasets by adding the following key to the model dictionary: 
+However, you can configure each model to run a bespoke list of datasets by adding the `dataset_list_override` key to the model dictionary: 
 
 ```
 model_list = []
@@ -86,12 +84,13 @@ model_list.append({"algo_class_name": "cfa", # algorithm, see algos/model_wrappe
                     model_arguments["dataset_list_override"] = ['mvtec_bottle', visapcb4'] # with these key present, only these datasets are ran for this model
                     })
 ```
+We choose .py for config files because it enables the user to use the flexibility of Python. For instance, if one wanted to test an algorithm with various hyperparameters, they could create a for loop which dynamically changes the given hyperparameter and description. 
 
 ## Adding algorithms
 
 The ease of adding algorithms is intended to be one of the major strengths of VisionAD. The process is described below.
 
-Each algorithm is built from a class called {algo_name}Wrapper, which inherits the ModelWrapper class. Using the provided template, a researcher only needs to implement six methods for the algorithm to work. Each method is discussed below:
+Each algorithm is built from a class called `{algo_name}Wrapper`, which inherits the `ModelWrapper` class. Using the provided template, a researcher only needs to implement six methods for the algorithm to work. Each method is discussed below:
 
 Initialisation: 
 
@@ -218,7 +217,7 @@ pip3 install imgaug
 pip3 install faiss-gpu
 ```
 
-If you only wish to install the base packages and a few extra per algorithm, here are the extra packages needed per algorithm:
+If you only wish to install the base packages and a few extra per algorithm, below are the extra packages needed per algorithm:
 
 
 ```
@@ -251,8 +250,8 @@ pip3 install efficientnet-pytorch
 pip3 install FrEIA 
 
 Memseg
-pip install timm
-pip install imgaug
+pip3 install timm
+pip3 install imgaug
 
 Efficientad
 Requires downloading these models and entering their paths:
