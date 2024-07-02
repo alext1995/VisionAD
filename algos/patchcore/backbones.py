@@ -4,7 +4,7 @@ import os
 
 
 _BACKBONES = {
-    "alexnet": "models.alexnet(pretrained=True",
+    "alexnet": "models.alexnet(pretrained=True)",
     "bninception": 'pretrainedmodels.__dict__["bninception"]'
     '(pretrained="imagenet", num_classes=1000)',
     "resnet50": "models.resnet50(pretrained=True)",

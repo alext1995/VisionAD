@@ -1,5 +1,4 @@
-patchcore_default_model_params =  {"results_path":"test_results", #, type=str)
-                                "seed":0, #, ,type=int, default=0, show_default=True)
+patchcore_default_model_params =  {"seed":0, #, ,type=int, default=0, show_default=True)
                                 "log_group":"group", #, type=str, default="group")
                                 "log_project":"project", #, type=str, default="project")
                                 "backbone_names_layers": {"wideresnet50": ["layer2", "layer3"]}, # each item must be a list of layers

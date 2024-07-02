@@ -14,9 +14,13 @@ class WrapperRandom(ModelWrapper):
         self.params = params
     
     def train_one_epoch(self,):
-        # self.dataloader_train - use this
-        pass
-    
+        for image, path, image_callback_info in self.dataloader_train:
+            pass 
+            
+        ## image_callback_info is only relevant if you add a callback to the 
+        ## dataloader_train. If you don't, you can ignore it
+        ## see the Synthetic anomalies section in the Readme for more information
+        
     def eval_outputs_dataloader(self, dataloader, len_dataloader):
         length = 0
         for item, _ in dataloader:
@@ -32,7 +36,12 @@ class WrapperRandom(ModelWrapper):
         pass
         
     def save_model(self, location):
-        pass
-    
+        self.save_params(location) # necessary code 
+        # save other stuff here such as ml weight, e.g.
+        # torch.save(self.ml_model, os.path.join(location, "model.pt"))
+        
     def load_model(self, location):
-        pass
+        params = self.load_params(location)  # necessary code 
+        self.load_model_params(**params)  # necessary code 
+        # load other stuff here such as ml weight, e.g.
+        # self.ml_model = torch.load(os.path.join(location, "model.pt"))

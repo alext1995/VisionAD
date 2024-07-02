@@ -1,5 +1,7 @@
 # VisionAD - a library of the most performant anomaly detection algorithms
 
+[Published at TMLR](https://openreview.net/forum?id=o5kYH7bNe3)
+
 VisionAD contains the largest and most performant collection of anomaly detection algorithms. All algorithms are written in a standardised manner such that they can be called by the same API. The library has a focus on:
 
 1. Benchmarking - as the algorithms are called and evaluated with the same code, the library can undertake a fair benchmarking of the currently available anomaly detection algorithms. This mitigates the issue of cherry-picked results. 
@@ -10,8 +12,8 @@ VisionAD contains the largest and most performant collection of anomaly detectio
 
 1. Clone the repository
 2. `pip3 install -r requirements.txt` / `pip3 install -r requirements_all.txt`
-3. Download the [MVTec](https://www.mvtec.com/company/research/datasets/mvtec-ad/)/VisA datasets
-4. Fill the paths to the MVTeac and VisA datasets in `data/configure_dataset.py`
+3. Download the [MVTec](https://www.mvtec.com/company/research/datasets/mvtec-ad/)/[VisA](https://github.com/amazon-science/spot-diff?tab=readme-ov-file#data-download) datasets
+4. Fill the paths to the MVTec and VisA datasets in `data/configure_dataset.py`
 5. Run one of the algorithms to check that everything is working:
 
 ```
@@ -88,7 +90,7 @@ We choose .py for config files because it enables the user to use the flexibilit
 
 ## Adding algorithms
 
-The ease of adding algorithms is intended to be one of the major strengths of VisionAD. The process is described below.
+The ease of adding algorithms is intended to be one of the major strengths of VisionAD. A walkthough Ipython file shows the process of adding an algorithm, based on an algorithm which makes random predictions.
 
 Each algorithm is built from a class called `{algo_name}Wrapper`, which inherits the `ModelWrapper` class. Using the provided template, a researcher only needs to implement six methods for the algorithm to work. Each method is discussed below:
 
@@ -128,7 +130,7 @@ Loading:
 
 Load the parameters of the model from a given location.
 
-A trivial example of a random classifier is included to help researchers with the small but necessary template code. Amend this classifier as you wish, as long as it uses the API structure given, and outputs predictions in the right shape/format, the code will fit nicely into the library.
+See the trivial example of a random classifier, and the Ipython file in the notebooks folder. Amend this code as you wish, as long as it uses the API structure given, and outputs predictions in the right shape/format, the code will fit into the library.
 
 ## Ipython experimentation
 Enabling easy experimentation is a goal of VisionAD. Early stage algorithm development is often done in an Ipython environment. The necessary template code can be loaded into a Ipython environment such as Jupyter notebook. The researcher can experiment with the algorithm class whilst the data loading and evaluation code is handled. A starter notebook is provided to demonstrate this using the trivial random classifier. 
@@ -138,11 +140,10 @@ VisionAD allows algorithms to output variations of their predictions. For instan
 
 The format of the metric files is:
 
-```json
+```
 {'Imagewise_AUC': {'metric_results': {'algo_variation_1': 0.526984126984127,
                                       'algo_variation_2': 0.5380952380952382},
-                   'metric_data': 
-                                    {'algo_variation_1': ...,
+                   'metric_data':   {'algo_variation_1': ...,
                                      'algo_variation_2': ...}},
  'Pixelwise_AUC': ...,
  'Pixelwise_AUPRO': ...,
@@ -176,6 +177,30 @@ datasets["demo_dataset"] = {"folder_path_regular_train" : r"",
 ```
 
 The names of the items in the novel_mask folder should match this in the novel_test folder, but can end in .png/_mask.png. For instance, if a novel image is called screw1.jpg, the corresponding mask could be called screw1.jpg/screw1.png/screw1_mask.png.
+
+## Synethetic anomalies
+In some algorithms, synthetic anomalies are created by adding pertubations to the training images, and using the information relating to this pertubation in training (i.e. masks). This is achieved in VisionAD by passing a callback to the train_dataloader as follows:
+
+'''
+
+def callback_function(pil_image):
+    # do something to the pil_image and apply 
+    image = transforms.ToTensor()(image)
+
+    pertubed_image = image[100:100, 100:100] * 2
+
+    # you can send anything which can be batched by a Pytorch dataloader
+    pertubation_meta_information = 2
+
+    # usually this is used to apply noise to an image, and the meta information keeps record of where the noise was added 
+
+    return pertubed_image, pertubation_meta_information
+
+dataloader_train.dataset.pre_normalisation_transform = callback_function
+
+for pertubed_image, path, pertubation_meta_information in dataloader_train:
+    # pass
+'''
 
 ## Other features
 As mentioned above, the library does not give algorithms access to the ground truths during training, to ensure data leakage is not possible. The wrapper also contains a number of other bug checking features such as ensuring the outputs of the algorithms are the right dimensions. The wrapper also measures total training time, training time per image, total inference time, and inference time per image. The wrapper allows all metrics to be logged to Weights and Biases (Wandb) if desired, and code is also provided to pull these results from Wandb and parse them into the tables shown in this publication.   
@@ -260,4 +285,4 @@ Requires downloading these models and entering their paths:
 ```
 
 # Transactions of Machine Learning Research (TMLR) Publication
-More details can be found in the Transactions of Machine Learning Research (TMLR) publication: VisionAD, a software package of performant anomaly detection algorithms, and Proportion Localised, an interpretable metric.
+More details can be found in the Transactions of Machine Learning Research (TMLR) publication: [VisionAD, a software package of performant anomaly detection algorithms, and Proportion Localised, an interpretable metric](https://openreview.net/forum?id=o5kYH7bNe3)
