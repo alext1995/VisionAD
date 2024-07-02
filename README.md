@@ -181,8 +181,7 @@ The names of the items in the novel_mask folder should match this in the novel_t
 ## Synethetic anomalies
 In some algorithms, synthetic anomalies are created by adding pertubations to the training images, and using the information relating to this pertubation in training (i.e. masks). This is achieved in VisionAD by passing a callback to the train_dataloader as follows:
 
-'''
-
+```
 def callback_function(pil_image):
     # do something to the pil_image and apply 
     image = transforms.ToTensor()(image)
@@ -200,7 +199,7 @@ dataloader_train.dataset.pre_normalisation_transform = callback_function
 
 for pertubed_image, path, pertubation_meta_information in dataloader_train:
     # pass
-'''
+```
 
 ## Other features
 As mentioned above, the library does not give algorithms access to the ground truths during training, to ensure data leakage is not possible. The wrapper also contains a number of other bug checking features such as ensuring the outputs of the algorithms are the right dimensions. The wrapper also measures total training time, training time per image, total inference time, and inference time per image. The wrapper allows all metrics to be logged to Weights and Biases (Wandb) if desired, and code is also provided to pull these results from Wandb and parse them into the tables shown in this publication.   
