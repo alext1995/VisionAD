@@ -218,12 +218,13 @@ pip3 install scikit-image
 pip3 install shapely
 pip3 install wandb
 pip3 install tqdm
+pip3 install scipy
 pip3 install proportion-localised
 ```
 
 The list of packages will ensure the following algorithms run:
 
-PPDN
+PPDM
 PEFM
 PFM
 CDO
